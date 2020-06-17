@@ -21,4 +21,5 @@ public class ConcreteBuilder extends Builder {
     public void buildPartC() {
         product.setPartA("这是C");
     }
+    //
 }
