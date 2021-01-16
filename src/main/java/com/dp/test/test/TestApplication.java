@@ -1,26 +1,145 @@
 package com.dp.test.test;
 
-import com.dp.test.test.builder.Builder;
-import com.dp.test.test.builder.ConcreteBuilder;
-import com.dp.test.test.builder.Director;
-import com.dp.test.test.builder.Product;
-import com.dp.test.test.singleton.LazySingleton;
-import org.junit.Test;
+import com.dp.test.test.utils.EnumTest;
+import com.dp.test.test.utils.Marge;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author 86151
  */
-@SpringBootApplication
+
 public class TestApplication {
+
+
+    public static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    public static void main(String[] args) {
+
+
+//        int a = 1;
+//        int b = 1;
+//        for (int i = 0 ;i < 10; i++ ){
+//            int c = a + b;
+//            System.out.println("a="+ a +"---b=" + b + "---c=" + c);
+//            a = b;
+//            b = c;
+//        }
+//
+//        int[] ints = {8, 5, 3, 12 , 6, 1, 10};
+//
+//        Marge.merge_sort1(ints);
+
+        List<Long> list = new ArrayList<>();
+        list.add(1L);
+        list.add(2L);
+        list.add(3L);
+        list.add(3L);
+        List<Long> collect = list.stream().distinct().collect(Collectors.toList());
+        System.out.println(collect);
+/*        List<Long> list1 = new ArrayList<>();
+        list1.add(1L);
+
+        List<Long> longs = (List<Long>) CollectionUtils.removeAll(list, list1);
+        System.out.println(longs);
+
+        System.out.println(EnumTest.ActivityRebateDay.toString());*/
+/*
+        Map<String,Object> map = new HashMap<>();
+        map.put("xs",11);
+        map.put("xs1",65);
+        map.put("xs2",31);
+
+        for (Map.Entry<String, Object> stringObjectEntry : map.entrySet()) {
+            System.out.println(stringObjectEntry.getKey() + ":" + stringObjectEntry.getValue());
+        }*/
+
+
+//        BitSet bitSet = new BitSet(16);
+//        BitSet bits2 = new BitSet(16);
+//        for (int i = 0 ; i < 16 ; i++){
+//            if (i%3 == 0)  bitSet.set(i);
+//            if((i%4) == 0) bits2.set(i);
+//        }
+//
+//        bits2.and(bitSet);
+//        System.out.println(bits2);
+
+        // 把不相同的全都输出
+//        bits2.or(bitSet);
+//        System.out.println(bits2);
+
+        // 把一样的筛选掉
+//        bits2.xor(bitSet);
+//        System.out.println(bits2);
+
+ /*       Enumeration<String> days;
+        Vector<String> dayNames = new Vector<>();
+        dayNames.add("Sunday");
+        dayNames.add("Monday");
+        dayNames.add("Tuesday");
+        dayNames.add("Wednesday");
+        dayNames.add("Thursday");
+        dayNames.add("Friday");
+        dayNames.add("Saturday");
+        days = dayNames.elements();
+        while (days.hasMoreElements()){
+            System.out.println(days.nextElement());
+        }*/
+
+/*        SortedMap<String , Object> map = new TreeMap<>();
+        map.put("xs",11);
+        map.put("xs1",65);
+        map.put("xs2",31);
+        Set<Map.Entry<String, Object>> entries = map.entrySet();
+        Iterator<Map.Entry<String, Object>> iterator = entries.iterator();
+        while (iterator.hasNext()){
+            Map.Entry<String, Object> next = iterator.next();
+            System.out.println(next.getKey() + "值:" + next.getValue());
+        }
+        System.out.println(map);*/
+
+        List<User> users = new ArrayList<>();
+        users.add(new User("张三", 5));
+        users.add(new User("李四", 5));
+        users.add(new User("李四", 4));
+        users.add(new User("王五", 3));
+        List<String> collect1 = users.stream().map(User::getName).collect(Collectors.toList());
+
+        System.out.println(collect1);
+
+        List<User> users1 = users.stream().filter(user -> user.getAge() == 5).collect(Collectors.toList());
+        System.out.println(users1);
+
+
+        System.out.println(dtf.format(LocalDateTime.now()));
+
+        String str = "1452#1-1365#4";
+        String[] split = str.split("-");
+        System.out.println(Arrays.toString(split));
+        for (String s : split) {
+            String[] split1 = s.split("#");
+            String itemId = split1[0];
+            String num = split1[1];
+            System.out.println(itemId+num);
+        }
+
+    }
+
 
     /*public static void main(String[] args) {
 
         SpringApplication.run(TestApplication.class, args);
-        List<User> users = new ArrayList<>();
-        users.add(new User("张三", 5));
-        users.add(new User("李四", 4));
-        users.add(new User("王五", 3));
+
 
         // 遍历取值
         //users.forEach(e -> System.out.println(e.getName()));
@@ -79,7 +198,7 @@ public class TestApplication {
         System.out.println(properties);*//*
 
 
-        *//*String s = "176278-176200-579N2A";
+     *//*String s = "176278-176200-579N2A";
         List list = new ArrayList<>();
         String[] prdArr = StringUtils.split(s, "A");
         if (prdArr != null && prdArr.length > 0) {
@@ -98,52 +217,20 @@ public class TestApplication {
                 list.add(split[0]);
             }
         }*//*
-    }
-
-    @Builder
-    @Test
-    public void gg() throws Exception{
-        // 根据路径获取对象
-        Class<?> clazz = Class.forName("com.dp.test.test.User");
-        Field[] fields = clazz.getFields();
-        for (Field field : fields) {
-            System.out.println(field);
-        }
-        System.out.println("clazz== "+clazz);
-
-        List<Map<String , Object>> list = new ArrayList<>();
-
-        List<Object> collect = list.stream().filter(e -> !e.get("ss").equals(0)).map(e -> Long.parseLong(e.get("xx").toString())).collect(Collectors.toList());
-
-        // 根据类.class 获取对象
-        Class<User> userClass = User.class;
-        System.out.println("userClass=="+userClass);
-
-        Channel channel = RabbitMqConfig.channel;
-
-
-
-        channel.basicPublish("exchangeName","routingKey",true, MessageProperties.TEXT_PLAIN,"Hello World!!".getBytes());
     }*/
 
-    private static volatile LazySingleton instance=null;
+/*    // 简单递归
+    public static void fun(int n){
+        if (n == 1){
+            System.out.println("n等于一");
+            return;
+        }else {
+            System.out.println("n大于1");
+            fun(n-1);
+        }
+    }*/
 
-    @Test
-    public void LazySingleton(){
 
-    }
 
-    @Test
-    public void Client(){
-        Builder builder = new ConcreteBuilder();
-        Director director = new Director(builder);
-        Product product = director.construct();
-        String s = "sggNsd";
-        String[] split = s.split("N*APPLICATION PROGRAM COMMAND}");
-        product.show();
-    }
-
-    public void testClient(){
-    }
 
 }
